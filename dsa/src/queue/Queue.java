@@ -1,4 +1,4 @@
-package queue;
+package src.queue;
 
 /**
  * @author long.truong@finos.asia
