@@ -32,9 +32,9 @@ public class TestCountingElements {
                 currentMaxCounter = counterArray[index];
 
         }
-        for(int item: counterArray){
-            if(item < maxCounterValue)
-                item = maxCounterValue;
+        for(int i = 0; i< counterArray.length ; i++){
+            if(counterArray[i] < maxCounterValue)
+                counterArray[i] = maxCounterValue;
         }
 
         return counterArray;

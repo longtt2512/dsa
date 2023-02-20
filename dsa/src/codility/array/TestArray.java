@@ -11,8 +11,10 @@ public class TestArray {
 
     public static int[] cyclicRotation(int[] input, int step){
         int[] result = input;
-        int stepAndLengthRatio = step% input.length;
-        System.out.println("aaa: "+stepAndLengthRatio);
+        for(int i=0; i< input.length; i++){
+            int newIndex = (i+step)% input.length;
+            result[newIndex] = input[i];
+        }
 
 
         return result;
