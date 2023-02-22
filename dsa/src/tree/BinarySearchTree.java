@@ -1,5 +1,7 @@
 package tree;
 
+import java.util.ArrayList;
+
 /**
  * @author long.truong@finos.asia
  */
@@ -35,8 +37,31 @@ public class BinarySearchTree {
                 }
             }
         }
+    }
 
+    public Node getRoot() {
+        return root;
+    }
 
+    public ArrayList<Integer> doInOrderImplementation(BinarySearchTree tree) {
+        ArrayList<Integer> results = new ArrayList<>();
+
+        class Traverse {
+            Traverse(BinarySearchTree.Node node) {
+                // In-Order traversal
+                // Visits left node -> current node -> right node
+                if (node.left != null) {
+                    new Traverse(node.left);
+                }
+                results.add(node.value);
+                if(node.right != null){
+                    new Traverse(node.right);
+                }
+            }
+        }
+        new Traverse(tree.getRoot());
+
+        return results;
     }
 
     class Node {
