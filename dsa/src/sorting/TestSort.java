@@ -131,6 +131,18 @@ public class TestSort {
 
 
 
+    public int solution(int start, int end, int constant) {
+        // Implement your solution here
+        int result = 0;
+        // Distance between 2 points
+        int distance = end - start;
+        if(distance <= constant)
+            return 1;
+        result = (int) Math.ceil(distance/constant);
+
+        return result;
+    }
+
     public static int solution(int[] input) {
         // Implement your solution here
         int result = -1;
