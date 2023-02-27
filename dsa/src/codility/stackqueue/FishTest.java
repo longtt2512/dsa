@@ -9,7 +9,7 @@ import java.util.Stack;
  */
 public class FishTest {
 
-    public int solution(int[] sizes, int[] directions) {
+    public static int solution(int[] sizes, int[] directions) {
         // Implement your solution here
         int remainingFish = 0;
 
@@ -43,5 +43,11 @@ public class FishTest {
 
 
         return remainingFish + tempStack.size();
+    }
+
+    public static void main(String[] args) {
+        int[] sizes =       {95, 86, 4, 26, 89, 42, 22, 23, 7, 25, 65, 92, 22};
+        int[] directions =  {0,  1,  1, 1,  0,  0,  1,  1,  1, 1,  1,  1, 0};
+        System.out.println(solution(sizes, directions));
     }
 }

@@ -6,7 +6,8 @@ package dp;
 public class LaneTest {
 
     public static void main(String[] args) {
-
+        System.out.println(solution("..xx.x.", "x.x.x.."));
+        System.out.println(solution(".xxx...x", "..x.xxxx"));
     }
 
     public static int solution(String lane1, String lane2) {
@@ -14,50 +15,52 @@ public class LaneTest {
         final String potholesPosition = "x";
 
         int maxFixedPotholes = 0;
-        int fixedPotholesWithoutTurnL1 = 0;
-        int fixedPotholesWithoutTurnL2 = 0;
+        // Without change lane
+        int fixedPotholesWithoutChangeLaneL1 = 0;
+        int fixedPotholesWithoutChangeLaneL2 = 0;
         int length = lane1.length();
+        // Changing lane index starts from 1 to length -2
 
+        int[] potholesL1Left = new int[length];
+        int[] potholesL2Left = new int[length];
+
+        // Without change lane
         for (int i = 0; i < length; i++) {
-            if (potholesPosition.equalsIgnoreCase(String.valueOf(lane1.charAt(i)))) {
-                ++fixedPotholesWithoutTurnL1;
+            char l1Char = lane1.charAt(i);
+            char l2Char = lane2.charAt(i);
+            if (isPotholesSegment(l1Char)) {
+                ++fixedPotholesWithoutChangeLaneL1;
             }
-            if (potholesPosition.equalsIgnoreCase(String.valueOf(lane2.charAt(i)))) {
-                ++fixedPotholesWithoutTurnL2;
+            if (isPotholesSegment(l2Char)) {
+                ++fixedPotholesWithoutChangeLaneL2;
+            }
+            // Convenience calculation
+            if (i >= 1 && i <= length - 1) {
+                potholesL1Left[i] = (isPotholesSegment(lane1.charAt(i-1)) ? 1 : 0) + potholesL1Left[i - 1];
+                potholesL2Left[i] = (isPotholesSegment(lane2.charAt(i-1)) ? 1 : 0) + potholesL2Left[i - 1];
             }
         }
-        maxFixedPotholes = Math.max(fixedPotholesWithoutTurnL1, fixedPotholesWithoutTurnL2);
+        maxFixedPotholes = Math.max(fixedPotholesWithoutChangeLaneL1, fixedPotholesWithoutChangeLaneL2);
 
-        // We gonna fix from the 3rd segment
-        int maxPotholesWithTurn = 0;
-        if (length >= 3) {
-            // Loop turn positions
-            int maxPotholesFromL1 = 0;
-            int maxPotholesFromL2 = 0;
-            for (int i = 1; i < length - 2; i++) {
-                // Left of position
-                for (int j = 0; j < i - 1; j++) {
-                    if (potholesPosition.equalsIgnoreCase(String.valueOf(lane1.charAt(j)))) {
-                        ++maxPotholesFromL1;
-                    }
-                    if (potholesPosition.equalsIgnoreCase(String.valueOf(lane2.charAt(j)))) {
-                        ++maxPotholesFromL2;
-                    }
-                }
-                // Right of position
-                for (int k = i + 1; k < length; k++) {
-                    if (potholesPosition.equalsIgnoreCase(String.valueOf(lane1.charAt(k)))) {
-                        ++maxPotholesFromL1;
-                    }
-                    if (potholesPosition.equalsIgnoreCase(String.valueOf(lane2.charAt(k)))) {
-                        ++maxPotholesFromL2;
-                    }
-                }
-            }
-            // Find max between 2 solutions
+        // Change lane
+        int maxChangeLane = 0;
+        for (int i = 1; i < length - 2; i++) {
+            int maxPotholesStartingFromL1 = 0;
+            int maxPotholesStartingFromL2 = 0;
 
+            char l1Char = lane1.charAt(i);
+            char l2Char = lane2.charAt(i);
+
+            maxPotholesStartingFromL2 = potholesL1Left[i] + (fixedPotholesWithoutChangeLaneL2- (isPotholesSegment(l2Char) ? 1 : 0)- potholesL2Left[i]);
+            maxPotholesStartingFromL1 = potholesL2Left[i] + (fixedPotholesWithoutChangeLaneL1 - (isPotholesSegment(l1Char) ? 1 : 0)- potholesL1Left[i]);
+            maxChangeLane = Math.max(maxChangeLane, Math.max(maxPotholesStartingFromL2, maxPotholesStartingFromL1));
+            System.out.println("I: "+ i+ " max change lane: "+ maxChangeLane);
         }
 
-        return maxFixedPotholes;
+        return Math.max(maxChangeLane, maxFixedPotholes);
+    }
+
+    public static boolean isPotholesSegment(char character) {
+        return "x".equalsIgnoreCase(String.valueOf(character));
     }
 }
