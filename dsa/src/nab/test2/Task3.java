@@ -10,13 +10,13 @@ public class Task3 {
 
     public static void main(String[] args) {
 //        int[] inputs = {1,2,3,3,2};
-//        int[] inputs = {2, 3, 5, 2, 3, 4, 6, 4, 1};
+        int[] inputs = {2, 3, 5, 2, 3, 4, 6, 4, 1};
 //        int[] inputs = {1, 5, 3, 2, 6, 6, 10, 4, 7, 2, 1};
 
 
 
-        int[] inputs = buildData2();
-        System.out.println(Arrays.toString(inputs));
+//        int[] inputs = buildData2();
+//        System.out.println(Arrays.toString(inputs));
 //        int solution = solution(ints);
         System.out.println(solution(inputs));
         System.out.println(solution2(inputs));

@@ -13,7 +13,7 @@ public class Task2 {
 
     public static int solution(int[] missions, int threshold) {
         int days = 0;
-        int n = missions.length;
+        int n = missions.length-1;
         int idx = 0;
 
         while (idx < n) {

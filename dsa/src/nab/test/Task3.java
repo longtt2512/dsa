@@ -53,7 +53,7 @@ public class Task3 {
         int n = input.length;
         int idx = 0;
         int res = 0;
-        int[] view = input.clone();
+        int[] view = Arrays.copyOf(input, input.length);
         Arrays.sort(view);
         while (idx < n) {
             int fnd = view[idx];
